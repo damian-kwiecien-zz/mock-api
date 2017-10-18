@@ -1,17 +1,20 @@
-<nav class="">
-  <span>Mock-Api</span>
-  <div>
-    <a [routerLink]="['/login']">Login</a>
-    <a [routerLink]="['/register']">Register</a>
-  </div>
-</nav>
+<top-bar>Loading...</top-bar>
 
 <div class="container-fluid">
   <div class="row">
 
     <div class="col-3">
       <aside>
-        <div>
+        <div class="list-group">
+          <button (click)="addMockResponse()" class="list-group-item list-group-item-action" [ngClass]="{'active': !mockResponse?.id}">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+          </button>
+          <div *ngFor="let res of mockResponses" (click)="selectMockResponse(res)" [ngClass]="{'active': res?.id == mockResponse?.id}"
+            class="list-group-item list-group-item-action">
+            {{res.name}}
+            <br>
+            <span>{{res.method | sentenceCase}}</span>: {{res.endpoint}}
+          </div>
         </div>
       </aside>
     </div>
@@ -19,26 +22,28 @@
     <div class="col-9">
 
       <main>
-          <div>
-                <div class="form-group">
-                        <label for="exampleFormControlInput1">Email address</label>
-                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
-                      </div>
-                      <div class="form-group">
-                        <label for="exampleFormControlSelect1">Example select</label>
-                        <select class="form-control" id="exampleFormControlSelect1">
-                          <option>Post</option>
-                          <option>Post</option>
-                          <option>Post</option>
-                          <option>Post</option>
-                        </select>
-                      </div>
-
-                      <div class="form-group">
-                        <label for="exampleFormControlTextarea1">Example textarea</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                      </div>
-            </div>
+        <div class="row">
+          <div class="form-group col-2">
+            <select [(ngModel)]="mockResponse.method" name="method" class="form-control">
+              <option [ngValue]="HttpMethodEnum.get">Get</option>
+              <option [ngValue]="HttpMethodEnum.post">Post</option>
+              <option [ngValue]="HttpMethodEnum.put">Put</option>
+              <option [ngValue]="HttpMethodEnum.delete">Delete</option>
+            </select>
+          </div>
+          <div class="form-group col">
+            <input [(ngModel)]="mockResponse.name" name="name" type="text" class="form-control" placeholder="Type name here...">
+          </div>
+          <div class="form-group col">
+            <input [(ngModel)]="mockResponse.endpoint" name="endpoint" type="text" class="form-control" placeholder="Enter URL here...">
+            <p *ngFor="let err of errors">{{err[0]}}: {{err[1]}}</p>
+          </div>
+          <div class="form-group col-2">
+            <button (click)="saveMockResponse()" type="button" class="btn btn-primary">Save</button>
+            <button (click)="deleteMockResponse()" [disabled]="!mockResponse?.id" type="button" class="btn btn-danger">Delete</button>
+          </div>
+        </div>
+        <div id="editor"></div>
       </main>
     </div>
   </div>
