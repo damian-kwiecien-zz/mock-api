@@ -10,6 +10,7 @@ import { AuthService, MockResponseService, AuthorizedHttpService } from '../shar
 import { MockResponsesResolver } from '../shared/resolvers'
 
 import { AppComponent } from './app.component'
+import { HomePageComponent } from './dashboard/home-page/home-page.component'
 import { RegisterComponent } from './register/register.component'
 import { LoginComponent } from './login/login.component'
 import { DashboardComponent } from './dashboard/dashboard.component'
@@ -18,10 +19,10 @@ import { LeftBarComponent } from './dashboard/left-bar/left-bar.component'
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component'
 import { SentenceCasePipe } from '../shared/pipes'
 
+
 const appRoutes = [{
   path: '',
-  component: DashboardComponent,
-  resolve: { mockResponses: MockResponsesResolver }
+  component: HomePageComponent,
 },
 {
   path: 'register',
@@ -34,7 +35,8 @@ const appRoutes = [{
 {
   path: 'dashboard',
   component: DashboardComponent,
-  canActivate: [AuthRouteGuard]
+  canActivate: [AuthRouteGuard],
+  resolve: { mockResponses: MockResponsesResolver }
 },
 {
   path: '**',
@@ -43,6 +45,7 @@ const appRoutes = [{
 @NgModule({
   declarations: [
     AppComponent,
+    HomePageComponent,
     RegisterComponent,
     LoginComponent,
     DashboardComponent,

@@ -1,0 +1,39 @@
+main,
+.container,
+.row {
+  height: 100%;
+  width: 100%;
+}
+
+.fork-me {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: 0;
+}
+
+main {
+  background-image: url('/assets/bg.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.body {
+  font-size: 2rem;
+  color: white;
+  font-weight: 700;
+  text-align: center;
+}
+
+.header {
+  color: white;
+  font-size: 4rem;
+  font-weight: 800;
+  text-align: center;
+}
+
+.footer {
+  color: white;
+  text-align: center;
+}
