@@ -1,0 +1,31 @@
+main,
+.container,
+.row {
+  height: 100%;
+  width: 100%;
+}
+
+main {
+  background-color: #f5f5f5;
+}
+
+.col {
+    background-color: white;
+    text-align: center;
+    padding: 50px;
+}
+
+h1 {
+    font-size: 6rem;
+    margin-bottom: 1rem;
+}
+
+h2 {
+    font-size: 3rem;
+    margin-bottom: 2rem;
+}
+
+h3 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}

@@ -15,8 +15,8 @@ import { LoginComponent } from './login/login.component'
 import { DashboardComponent } from './dashboard/dashboard.component'
 import { TopBarComponent } from './dashboard/top-bar/top-bar.component'
 import { LeftBarComponent } from './dashboard/left-bar/left-bar.component'
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component'
 import { SentenceCasePipe } from '../shared/pipes'
-
 
 const appRoutes = [{
   path: '',
@@ -35,6 +35,10 @@ const appRoutes = [{
   path: 'dashboard',
   component: DashboardComponent,
   canActivate: [AuthRouteGuard]
+},
+{
+  path: '**',
+  component: PageNotFoundComponent
 }] as Routes
 @NgModule({
   declarations: [
@@ -44,6 +48,7 @@ const appRoutes = [{
     DashboardComponent,
     TopBarComponent,
     LeftBarComponent,
+    PageNotFoundComponent,
     SentenceCasePipe
   ],
   imports: [
