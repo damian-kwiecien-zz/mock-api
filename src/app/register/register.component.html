@@ -1,31 +1,43 @@
 <main>
-  <div class="container">
-    <div class="row align-items-center">
-      <div class="col-md-3"></div>
+  <div class="container-fluid">
+    <div class="row align-items-center justify-content-center">
 
-      <form class="col" novalidate>
+      <form class="col-auto" novalidate>
         <h3 class="form-group">Register for Mock-Api today!</h3>
         <div class="form-group">
           <label for="email">Email *</label>
-          <input [(ngModel)]="email" name="email" type="email" class="form-control" id="email" placeholder="eg. name.surname@domain.com">
-          <p class="invalid" *ngFor="let err of errors['email']">{{err}}</p>
+          <input [ngClass]="{'is-invalid': errors['email']}" [(ngModel)]="email" name="email" type="email" class="form-control" id="email" placeholder="eg. name.surname@domain.com">
+          <p class="text-danger" *ngFor="let err of errors['email']">{{err}}</p>
         </div>
         <div class="form-group">
           <label for="password">Password *</label>
-          <input [(ngModel)]="password" name="password" type="password" class="form-control" id="password" aria-describedby="passwordHelp"
+          <input [ngClass]="{'is-invalid': errors['password']}" [(ngModel)]="password" name="password" type="password" class="form-control" id="password" aria-describedby="passwordHelp"
             placeholder="eg. jE3JT!ak.uw0">
           <small id="passwordHelp" class="form-text text-muted">Make sure your password will be strong enough!</small>
-          <p class="invalid" *ngFor="let err of errors['password']">{{err}}</p>
+          <p class="text-danger" *ngFor="let err of errors['password']">{{err}}</p>
         </div>
         <div class="form-group">
           <label for="confirmPassword">Confirm password *</label>
-          <input [(ngModel)]="confirmPassword" name="confirmPassword" type="password" class="form-control" id="confirmPassword" placeholder="eg. jE3JT!ak.uw0">
-          <p class="invalid" *ngFor="let err of errors['confirmPassword']">{{err}}</p>
+          <input [ngClass]="{'is-invalid': errors['confirmPassword']}" [(ngModel)]="confirmPassword" name="confirmPassword" type="password" class="form-control" id="confirmPassword" placeholder="eg. jE3JT!ak.uw0">
+          <p class="text-danger" *ngFor="let err of errors['confirmPassword']">{{err}}</p>
         </div>
         <button (click)="register()" type="button" class="btn btn-primary btn-block">Register</button>
+        <small class="text-muted">Or login : </small>
+        <a [routerLink]="['/login']">
+          <i class="fa fa-link" aria-hidden="true"></i>
+        </a>
+        <br>
+        <small class="text-muted">Or go home : </small>
+        <a [routerLink]="['/']">
+          <i class="fa fa-link" aria-hidden="true"></i>
+        </a>
+        <br>
+        <small class="text-muted">Or go dashboard : </small>
+        <a [routerLink]="['/dashboard']">
+          <i class="fa fa-link" aria-hidden="true"></i>
+        </a>
       </form>
 
-      <div class="col-md-3"></div>
     </div>
   </div>
 </main>
