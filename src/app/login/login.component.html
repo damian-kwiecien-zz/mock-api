@@ -1,25 +1,38 @@
 <main>
-  <div class="container">
-    <div class="row align-items-center">
-      <div class="col-md-3"></div>
+  <div class="container-fluid">
+    <div class="row align-items-center justify-content-center">
 
-      <form class="col" novalidate>
-          <h3 class="form-group">Login to your account</h3>
+      <form class="col-auto" novalidate>
+        <h3 class="form-group">Login to your account</h3>
         <div class="form-group">
           <label for="email">Email *</label>
-          <input [(ngModel)]="email" name="email" type="email" class="form-control" id="email" placeholder="eg. name.surname@domain.com">
-          <p class="invalid" *ngFor="let err of errors['email']">{{err}}</p>
+          <input [ngClass]="{'is-invalid': errors['email']}" [(ngModel)]="email" name="email" type="email" class="form-control" id="email"
+            placeholder="eg. name.surname@domain.com">
+          <p class="text-danger" *ngFor="let err of errors['email']">{{err}}</p>
         </div>
         <div class="form-group">
           <label for="password">Password *</label>
-          <input [(ngModel)]="password" name="password" type="password" class="form-control" id="password" aria-describedby="passwordHelp"
-            placeholder="eg. jE3JT!ak.uw0">
-          <p class="invalid" *ngFor="let err of errors['password']">{{err}}</p>
+          <input [ngClass]="{'is-invalid': errors['password']}" [(ngModel)]="password" name="password" type="password" class="form-control"
+            id="password" aria-describedby="passwordHelp" placeholder="eg. jE3JT!ak.uw0">
+          <p class="text-danger" *ngFor="let err of errors['password']">{{err}}</p>
         </div>
         <button (click)="login()" type="button" class="btn btn-primary btn-block">Login</button>
+        <small class="text-muted">Or register : </small>
+        <a [routerLink]="['/register']">
+          <i class="fa fa-link" aria-hidden="true"></i>
+        </a>
+        <br>
+        <small class="text-muted">Or go home : </small>
+        <a [routerLink]="['/']">
+          <i class="fa fa-link" aria-hidden="true"></i>
+        </a>
+        <br>
+        <small class="text-muted">Or go dashboard : </small>
+        <a [routerLink]="['/dashboard']">
+          <i class="fa fa-link" aria-hidden="true"></i>
+        </a>
       </form>
 
-      <div class="col-md-3"></div>
     </div>
   </div>
 </main>

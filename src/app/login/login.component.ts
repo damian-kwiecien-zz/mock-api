@@ -27,7 +27,7 @@ export class LoginComponent {
     this._authService.login(user).subscribe(({ token }) => {
       this.errors = {}
       this._cookieService.put('token', token)
-      this._router.navigate(['/'])
+      this._router.navigate(['/dashboard'])
     }, err => {
       this.errors = err
     })

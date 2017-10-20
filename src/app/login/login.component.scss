@@ -1,5 +1,5 @@
 main,
-.container,
+.container-fluid,
 .row {
   height: 100%;
   width: 100%;
@@ -12,10 +12,9 @@ main {
 form {
     padding: 50px;
     background-color: white;
+    width: 40vw;
 }
 
-.invalid {
-    margin-top: .25rem;
-    font-size: .875rem;
-    color: #dc3545;
+.form-group > p {
+    font-size: .8rem;
 }
