@@ -1,4 +1,4 @@
-<top-bar>Loading...</top-bar>
+<top-bar (export)="exportMockResponse()">Loading...</top-bar>
 
 <div class="container-fluid">
   <div class="row">
@@ -6,7 +6,7 @@
     <div class="col-3">
       <aside>
         <div class="list-group">
-          <button (click)="addMockResponse()" class="list-group-item list-group-item-action" [ngClass]="{'active': !mockResponse?.id}">
+          <button (click)="addMockResponse()" class="list-group-item list-group-item-action" [ngClass]="{'active': !mockResponse?.id}" title="Add new response">
             <i class="fa fa-plus" aria-hidden="true"></i>
           </button>
           <div *ngFor="let res of mockResponses" (click)="selectMockResponse(res)" [ngClass]="{'active': res?.id == mockResponse?.id}"
@@ -23,25 +23,36 @@
 
       <main>
         <div class="row">
-          <div class="form-group col-2">
-            <select [(ngModel)]="mockResponse.method" name="method" class="form-control">
+
+          <div class="form-group col-auto">
+            <label class="form-control-label" for="">Method:</label>
+            <select [ngClass]="{'is-invalid': errors['method']}" [(ngModel)]="mockResponse.method" name="method" class="form-control"
+              data-toggle="popover" data-html="true" data-trigger="hover" data-placement="bottom">
               <option [ngValue]="HttpMethodEnum.get">Get</option>
               <option [ngValue]="HttpMethodEnum.post">Post</option>
               <option [ngValue]="HttpMethodEnum.put">Put</option>
               <option [ngValue]="HttpMethodEnum.delete">Delete</option>
             </select>
           </div>
+
           <div class="form-group col">
-            <input [(ngModel)]="mockResponse.name" name="name" type="text" class="form-control" placeholder="Type name here...">
+            <label class="form-control-label" for="">Name:</label>
+            <input [ngClass]="{'is-invalid': errors['name']}" [(ngModel)]="mockResponse.name" name="name" type="text" class="form-control"
+              placeholder="Type name here..." data-toggle="popover" data-html="true" data-trigger="hover" data-placement="bottom">
           </div>
+
           <div class="form-group col">
-            <input [(ngModel)]="mockResponse.endpoint" name="endpoint" type="text" class="form-control" placeholder="Enter URL here...">
-            <p *ngFor="let err of errors">{{err[0]}}: {{err[1]}}</p>
+            <label class="form-control-label" for="">Endpoint:</label>
+            <input [ngClass]="{'is-invalid': errors['endpoint']}" [(ngModel)]="mockResponse.endpoint" name="endpoint" type="text" class="form-control"
+              placeholder="Enter URL here..." data-toggle="popover" data-html="true" data-trigger="hover" data-placement="bottom">
           </div>
-          <div class="form-group col-2">
-            <button (click)="saveMockResponse()" type="button" class="btn btn-primary">Save</button>
+
+          <div class="form-group col-auto align-self-end">
+            <button [ngClass]="{'is-invalid': errors['body']}" (click)="saveMockResponse()" type="button" class="btn btn-primary" data-toggle="popover"
+              data-html="true" data-trigger="hover" data-placement="bottom">Save</button>
             <button (click)="deleteMockResponse()" [disabled]="!mockResponse?.id" type="button" class="btn btn-danger">Delete</button>
           </div>
+
         </div>
         <div id="editor"></div>
       </main>

@@ -4,6 +4,7 @@ import { HttpMethod, Dict, HttpMethodEnum } from '../../shared/others'
 import { MockResponse, MockResponseAddModel } from '../../shared/models'
 import { ActivatedRoute } from '@angular/router';
 declare var ace//: AceAjax.Ace
+declare var $
 @Component({
   selector: 'dashboard',
   templateUrl: './dashboard.component.html',
@@ -13,6 +14,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   HttpMethodEnum = HttpMethodEnum
 
   private _mockResponses: MockResponse[] = []
+  private _mockResponsePropToPopover: Dict<any> = {}
 
   set mockResponses(value: MockResponse[]) {
     this._mockResponses = this.sortMockResponsesAlphabetically(value)
@@ -32,7 +34,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   session
   editor
-  errors: [string, string][] = []
+  errors: Dict<string[]> = {}
 
   constructor(private route: ActivatedRoute, private _authService: AuthService, private _mockResponseService: MockResponseService) { }
 
@@ -42,6 +44,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.initEditor()
+    this.initPopovers()
   }
 
   private initEditor() {
@@ -56,12 +59,27 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     })
   }
 
+  private initPopovers() {
+    const methodPopover = $('select[name="method"][data-toggle="popover"]').popover('disable')
+    const namePopover = $('input[name="name"][data-toggle="popover"]').popover('disable')
+    const endpointPopover = $('input[name="endpoint"][data-toggle="popover"]').popover('disable')
+    const bodyPopover = $('button[data-toggle="popover"]').popover('disable')
+
+    this._mockResponsePropToPopover = {
+      method: methodPopover,
+      name: namePopover,
+      endpoint: endpointPopover,
+      body: bodyPopover
+    }
+  }
+
   private sortMockResponsesAlphabetically(responses: MockResponse[]) {
-    return responses.sort((a,b) => a.name.localeCompare(b.name))
+    return responses.sort((a, b) => a.name.localeCompare(b.name))
   }
 
   addMockResponse() {
     this.mockResponse = { method: HttpMethodEnum.get } as MockResponseAddModel
+    this.session.setValue('{\n\t\n}')
   }
 
   selectMockResponse(response: MockResponse) {
@@ -82,8 +100,11 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this._mockResponseService.createMockResponse(response)
       .subscribe(r => {
         this.mockResponses = [...this.mockResponses, r]
+        this.errors = {}
+        this.disablePopovers()
       }, err => {
-        this.errors = Object.entries(err)
+        this.errors = err
+        this.enableAndWriteErrorsToPopovers(err)
       })
   }
 
@@ -94,8 +115,11 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this._mockResponseService.updateMockResponse(response.id, { name, method, body, endpoint })
       .subscribe(r => {
         this.mockResponses = [...this.mockResponses.filter(r2 => r2.id != r.id), r]
+        this.errors = {}
+        this.disablePopovers()
       }, err => {
-        this.errors = Object.entries(err)
+        this.errors = err
+        this.enableAndWriteErrorsToPopovers(err)
       })
   }
 
@@ -106,9 +130,36 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       .subscribe(r => {
         this.mockResponses = this.mockResponses.filter(r2 => r2.id != r.id)
         this.addMockResponse()
+        this.errors = {}
+        this.disablePopovers()
       }, err => {
-        this.errors = Object.entries(err)
+        this.errors = err
+        this.enableAndWriteErrorsToPopovers(err)
       })
   }
 
+  private enableAndWriteErrorsToPopovers(errors: Dict<string[]>) {
+    Object.keys(errors).forEach(k => {
+      const popover = this._mockResponsePropToPopover[k]
+      const error = errors[k]
+
+      if (popover && error) {
+        popover.attr('data-content', error.join('<br>'))
+        popover.popover('enable')
+      }
+    })
+  }
+
+  private disablePopovers() {
+    Object.values(this._mockResponsePropToPopover).forEach(p => p.popover('disable'))
+  }
+
+  exportMockResponse() {
+    const a = document.createElement('a')
+
+    a.href = `data:attachment/text,${encodeURI(this.mockResponse.body)}`
+    a.target = '_blank'
+    a.download = `${this.mockResponse.name}.json`
+    a.click()
+  }
 }
