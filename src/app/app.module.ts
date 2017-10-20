@@ -15,7 +15,6 @@ import { RegisterComponent } from './register/register.component'
 import { LoginComponent } from './login/login.component'
 import { DashboardComponent } from './dashboard/dashboard.component'
 import { TopBarComponent } from './dashboard/top-bar/top-bar.component'
-import { LeftBarComponent } from './dashboard/left-bar/left-bar.component'
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component'
 import { SentenceCasePipe } from '../shared/pipes'
 
@@ -50,7 +49,6 @@ const appRoutes = [{
     LoginComponent,
     DashboardComponent,
     TopBarComponent,
-    LeftBarComponent,
     PageNotFoundComponent,
     SentenceCasePipe
   ],
