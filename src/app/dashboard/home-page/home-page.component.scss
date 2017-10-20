@@ -1,5 +1,5 @@
 main,
-.container,
+.container-fluid,
 .row {
   height: 100%;
   width: 100%;
@@ -36,4 +36,14 @@ main {
 .footer {
   color: white;
   text-align: center;
+}
+
+.fa-heart {
+  color: darkred;
+}
+
+.love {
+  text-align: right;
+  color: black;
+  font-weight: 800;
 }
