@@ -2,27 +2,23 @@
 
 <div class="container-fluid">
   <div class="row">
-
-    <div class="col-3">
-      <aside>
-        <div class="list-group">
-          <button (click)="addMockResponse()" class="list-group-item list-group-item-action" [ngClass]="{'active': !mockResponse?.id}" title="Add new response">
-            <i class="fa fa-plus" aria-hidden="true"></i>
-          </button>
-          <div *ngFor="let res of mockResponses" (click)="selectMockResponse(res)" [ngClass]="{'active': res?.id == mockResponse?.id}"
-            class="list-group-item list-group-item-action">
-            {{res.name}}
-            <br>
-            <span>{{res.method | sentenceCase}}</span>: {{res.endpoint}}
-          </div>
+    <aside class="col-3">
+      <div class="list-group">
+        <div (click)="addMockResponse()" class="list-group-item list-group-item-action" [ngClass]="{'active': !mockResponse?.id}"
+          title="Add new response">
+          <i class="fa fa-plus" aria-hidden="true"></i>
         </div>
-      </aside>
-    </div>
+        <div *ngFor="let res of mockResponses" (click)="selectMockResponse(res)" [ngClass]="{'active': res?.id == mockResponse?.id}"
+          class="list-group-item list-group-item-action">
+          <div class="name-label">{{res.name}}</div>
+          <span class="method-label text-uppercase">{{res.method}}: </span>{{res.endpoint}}
+        </div>
+      </div>
+    </aside>
 
     <div class="col-9">
-
       <main>
-        <div class="row">
+        <div class="row align-items-end">
 
           <div class="form-group col-auto">
             <label class="form-control-label" for="">Method:</label>
@@ -47,7 +43,7 @@
               placeholder="Enter URL here..." data-toggle="popover" data-html="true" data-trigger="hover" data-placement="bottom">
           </div>
 
-          <div class="form-group col-auto align-self-end">
+          <div class="form-group col-auto">
             <button [ngClass]="{'is-invalid': errors['body']}" (click)="saveMockResponse()" type="button" class="btn btn-primary" data-toggle="popover"
               data-html="true" data-trigger="hover" data-placement="bottom">Save</button>
             <button (click)="deleteMockResponse()" [disabled]="!mockResponse?.id" type="button" class="btn btn-danger">Delete</button>
