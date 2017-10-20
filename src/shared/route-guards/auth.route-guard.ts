@@ -11,7 +11,7 @@ export class AuthRouteGuard implements CanActivate {
         const canActivate = !!this._cookieService.get('token')
 
         if (!canActivate)
-            this._router.navigate(['login'])
+            this._router.navigate(['/login'])
 
         return canActivate 
     }
