@@ -6,7 +6,7 @@
   </div>
 
   <div class="col-auto">
-    <button (click)="emitExportEvent()" class="btn btn-light" title="Export as json">
+    <button (click)="emitExportEvent()" [disabled]="!mockResponse?.id" class="btn btn-light" title="Export as json">
       <i class="fa fa-download" aria-hidden="true"></i>
     </button>
   </div>

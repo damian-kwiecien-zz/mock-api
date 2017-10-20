@@ -2,8 +2,9 @@ import { Component, AfterViewInit, OnInit } from '@angular/core';
 import { AuthService, MockResponseService } from '../../shared/services'
 import { HttpMethod, Dict, HttpMethodEnum } from '../../shared/others'
 import { MockResponse, MockResponseAddModel } from '../../shared/models'
-import { ActivatedRoute } from '@angular/router';
-declare var ace//: AceAjax.Ace
+import { ActivatedRoute } from '@angular/router'
+
+declare var ace
 declare var $
 @Component({
   selector: 'dashboard',
@@ -13,8 +14,8 @@ declare var $
 export class DashboardComponent implements OnInit, AfterViewInit {
   HttpMethodEnum = HttpMethodEnum
 
-  private _mockResponses: MockResponse[] = []
   private _mockResponsePropToPopover: Dict<any> = {}
+  private _mockResponses: MockResponse[] = []
 
   set mockResponses(value: MockResponse[]) {
     this._mockResponses = this.sortMockResponsesAlphabetically(value)
@@ -23,10 +24,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   get mockResponses(): MockResponse[] {
     return this._mockResponses
   }
-  // ||
-  // [{ name: 'aa', body: 'aaa', id: 1, endpoint: 'end', method: 'get' },
-  // { name: 'aAWGa', body: 'aaAWFa', id: 2, endpoint: 'end', method: 'put' },
-  // { name: 'aaAF', body: 'aAWFaa', id: 3, endpoint: 'enAWDd', method: 'get' }]
 
   mockResponse: MockResponse | MockResponseAddModel = {
     method: HttpMethodEnum.get
@@ -57,6 +54,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.session.on('change', (e) => {
       this.mockResponse.body = this.session.getValue()
     })
+
+    this.session.setValue('{\n\t\n}')
   }
 
   private initPopovers() {
@@ -159,7 +158,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
     a.href = `data:attachment/text,${encodeURI(this.mockResponse.body)}`
     a.target = '_blank'
-    a.download = `${this.mockResponse.name}.json`
+    a.download = `${this.mockResponse.name || 'empty'}.json`
     a.click()
   }
 }

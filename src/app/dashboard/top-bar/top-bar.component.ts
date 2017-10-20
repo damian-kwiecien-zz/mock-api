@@ -1,4 +1,5 @@
-import { Component, Output, EventEmitter } from '@angular/core'
+import { Component, Output, EventEmitter, Input } from '@angular/core'
+import { MockResponse } from '../../../shared/models'
 
 @Component({
   selector: 'top-bar',
@@ -7,6 +8,7 @@ import { Component, Output, EventEmitter } from '@angular/core'
 })
 export class TopBarComponent { 
   @Output() readonly export: EventEmitter<void> = new EventEmitter<void>()
+  @Input() mockResponse: MockResponse
 
   emitExportEvent() {
     this.export.emit()
