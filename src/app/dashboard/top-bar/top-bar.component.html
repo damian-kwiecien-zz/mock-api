@@ -1,7 +1,19 @@
-<nav class="row">
-  <span class="col-2">Mock-Api</span>
-  <div class="col">
-    <a [routerLink]="['/login']">Login</a>
-    <a [routerLink]="['/register']">Register</a>
+<nav class="row btn-primary">
+
+  <div class="col-auto">
+    <a [routerLink]="['/']" class="btn btn-light" title="Go to home">
+      <i class="fa fa-home" aria-hidden="true"></i> Mock-Api</a>
   </div>
+
+  <div class="col-auto">
+    <button (click)="emitExportEvent()" class="btn btn-light" title="Export as json">
+      <i class="fa fa-download" aria-hidden="true"></i>
+    </button>
+  </div>
+
+  <div class="col">
+    <a [routerLink]="['/login']" class="btn btn-light" title="Login">Login</a>
+    <a [routerLink]="['/register']" class="btn btn-light" title="Register">Register</a>
+  </div>
+  
 </nav>
