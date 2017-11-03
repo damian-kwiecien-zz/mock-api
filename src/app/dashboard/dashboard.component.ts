@@ -46,7 +46,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   private initEditor() {
     this.editor = ace.edit("editor")
-    this.editor.setTheme("ace/theme/monokai")
+    this.editor.setTheme("ace/theme/eclipse")
 
     this.session = this.editor.getSession()
     this.session.setMode("ace/mode/json")
@@ -79,11 +79,13 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   addMockResponse() {
     this.mockResponse = { method: HttpMethodEnum.get } as MockResponseAddModel
     this.session.setValue('{\n\t\n}')
+    this.errors = {}
   }
 
   selectMockResponse(response: MockResponse) {
     this.mockResponse = { ...response }
     this.session.setValue(response.body)
+    this.errors = {}
   }
 
   saveMockResponse() {
@@ -99,6 +101,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this._mockResponseService.createMockResponse(response)
       .subscribe(r => {
         this.mockResponses = [...this.mockResponses, r]
+        this.selectMockResponse(r)
+        console.log(this.mockResponse);
+        
         this.errors = {}
         this.disablePopovers()
       }, err => {
@@ -114,6 +119,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this._mockResponseService.updateMockResponse(response.id, { name, method, body, endpoint })
       .subscribe(r => {
         this.mockResponses = [...this.mockResponses.filter(r2 => r2.id != r.id), r]
+        this.selectMockResponse(r)
         this.errors = {}
         this.disablePopovers()
       }, err => {
@@ -153,12 +159,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     Object.values(this._mockResponsePropToPopover).forEach(p => p.popover('disable'))
   }
 
-  exportMockResponse() {
-    const a = document.createElement('a')
-
-    a.href = `data:attachment/text,${encodeURI(this.mockResponse.body)}`
-    a.target = '_blank'
-    a.download = `${this.mockResponse.name || 'empty'}.json`
-    a.click()
+  importAsJson(json: string) {
+    this.session.setValue(json)
   }
 }

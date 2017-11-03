@@ -34,10 +34,18 @@ aside > .list-group > div:first-child {
 main {
     height: 100%;
     padding: 8px;
+    border: 1px solid rgba(0,0,0,.15);
+    border-top-left-radius: .25rem;
+    border-top-right-radius: .25rem;
 }
 
 main > .row {
     height: 15%;
+    margin: 0;
+    border-top: 1px solid rgba(0,0,0,.15);
+    border-bottom: 1px solid rgba(0,0,0,.15);
+    border-top-left-radius: .25rem;
+    border-top-right-radius: .25rem;
 }
 
 #editor {

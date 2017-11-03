@@ -6,14 +6,20 @@
   </div>
 
   <div class="col-auto">
-    <button (click)="emitExportEvent()" [disabled]="!mockResponse?.id" class="btn btn-light" title="Export as json">
+    <button (click)="exportAsJson()" [disabled]="!mockResponse?.id" class="btn btn-light" title="Export as json">
       <i class="fa fa-download" aria-hidden="true"></i>
+    </button>
+    <button (click)="emitImportAsJsonEvent()" [disabled]="mockResponse?.id" class="btn btn-light" title="Export as json">
+      <i class="fa fa-upload" aria-hidden="true"></i>
+    </button>
+    <button (click)="copyTokenToClipboard()" class="btn btn-light" title="Copy token to clipboard">
+      <i class="fa fa-clipboard" aria-hidden="true"></i>
     </button>
   </div>
 
   <div class="col">
-    <a [routerLink]="['/login']" class="btn btn-light" title="Login">Login</a>
+    <button *ngIf="authService.isLoggedIn" (click)="logout()" class="btn btn-light" title="Logout">Logout</button>
     <a [routerLink]="['/register']" class="btn btn-light" title="Register">Register</a>
   </div>
-  
+
 </nav>

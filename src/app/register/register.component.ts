@@ -27,6 +27,8 @@ export class RegisterComponent {
 
     this._authService.register(user).subscribe(_ => {
       this.errors = {}
+      console.log('aw wad ');
+      
       this._router.navigate(['/login'])
     }, err => {
       this.errors = err

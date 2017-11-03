@@ -5,12 +5,17 @@ import * as env from '../../../env'
 import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/catch'
 import { Observable } from 'rxjs/Rx'
+import { CookieService } from 'ngx-cookie'
 
 
 @Injectable()
 export class AuthService {
+    
+    get isLoggedIn(): boolean {
+        return !!this._cookieService.get('token')
+    }
 
-    constructor(private _http: Http) { }
+    constructor(private _http: Http, private _cookieService: CookieService) { }
 
     register(user: UserRegisterModel): Observable<{}> {
         return this._http.post(`${env.domainAddress}/register`, user)
@@ -22,6 +27,10 @@ export class AuthService {
         return this._http.post(`${env.domainAddress}/login`, user)
             .map(res => res.json())
             .catch(err => Observable.throw(err.json()))
+    }
+
+    logout() {
+        this._cookieService.remove('token')
     }
 
     checkToken(token: { token: string }) {
